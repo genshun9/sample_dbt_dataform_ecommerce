@@ -1,0 +1,2 @@
+# sample_dbt_dataform_ecommerce
+thelook_ecommerceをdbtとdataformでサンプル実装
