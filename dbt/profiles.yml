@@ -1,0 +1,11 @@
+sample_dbt_ecommerce:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: YOUR_PROJECT_ID
+      dataset: dbt_ecommerce
+      threads: 4
+      location: US
+      timeout_seconds: 300

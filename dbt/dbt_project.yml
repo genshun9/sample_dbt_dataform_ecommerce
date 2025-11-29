@@ -1,0 +1,33 @@
+
+# project name
+name: 'sample_dbt_ecommerce'
+version: '1.0.0'
+
+# profile
+profile: 'sample_dbt_ecommerce'
+
+# models-paths
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+# directories to be removed by `dbt clean`
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+models:
+  sample_dbt_ecommerce:
+    staging:
+      +materialized: view
+      +tags: ["staging"]
+    intermediate:
+      +materialized: ephemeral
+    dwh:
+      +materialized: table
+      +tags: ["dwh"]
+    mart:
+      +materialized: table
+      +tags: ["mart"]
