@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: ecommerce_sample_data
+    description: スナップショットテスト用に手動管理するデータ
+    tables:
+      - name: raw_users
+        description: ユーザーマスタ
+        columns:
+          - name: user_id
+            description: ユーザーID（主キー）
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+            description: 名
+          - name: last_name
+            description: 姓
+          - name: age
+            description: 年齢
+          - name: gender
+            description: 性別（M/F）
+          - name: country
+            description: 国
+          - name: created_at
+            description: ユーザー作成日時
+

@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: 商品ディメンション
+    columns:
+      - name: product_id
+        description: 商品ID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: 商品名
+      - name: brand
+        description: ブランド
+      - name: category
+        description: カテゴリ
+      - name: department
+        description: 部門
+      - name: product_cost
+        description: 原価
+
+  - name: dim_users
+    description: ユーザーディメンション
+    columns:
+      - name: user_id
+        description: ユーザーID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: age
+        description: 年齢
+      - name: gender
+        description: 性別
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['F', 'M']
+      - name: country
+        description: 国
+
+  - name: fact_orders
+    description: 注文ファクト
+    columns:
+      - name: order_id
+        description: 注文ID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: ユーザーID（外部キー）
+        tests:
+          - not_null
+      - name: status
+        description: 注文ステータス
+        tests:
+          - not_null
+      - name: order_created_at
+        description: 注文作成日時
+        tests:
+          - not_null
+      - name: total_sale_amount
+        description: 売上合計金額
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+      - name: total_gross_profit
+        description: 粗利益合計

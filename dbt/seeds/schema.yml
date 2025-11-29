@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: promotion_calendar
+    description: プロモーションカレンダー
+    columns:
+      - name: promo_date
+        description: プロモーション実施日
+      - name: promo_name
+        description: プロモーション名
+      - name: discount_rate
+        description: 割引率（0.0-1.0）

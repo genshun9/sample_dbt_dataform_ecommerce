@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: stg_users
+    description: ユーザースナップショットの最新レコード
+    columns:
+      - name: user_id
+        description: ユーザーID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: 名
+      - name: last_name
+        description: 姓
+      - name: age
+        description: 年齢
+      - name: gender
+        description: 性別
+      - name: country
+        description: 国
+      - name: created_at
+        description: 作成日時
+
+  - name: stg_products
+    description: 商品マスタ
+    columns:
+      - name: product_id
+        description: 商品ID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: 商品名
+      - name: brand
+        description: ブランド
+      - name: category
+        description: カテゴリ
+      - name: department
+        description: 部門
+      - name: product_cost
+        description: 原価
+
+  - name: stg_orders
+    description: 注文
+    columns:
+      - name: order_id
+        description: 注文ID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: ユーザーID
+        tests:
+          - not_null
+      - name: status
+        description: 注文ステータス
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Complete', 'Cancelled', 'Returned', 'Processing', 'Shipped']
+      - name: created_at
+        description: 注文作成日時
+        tests:
+          - not_null
+
+  - name: stg_order_items
+    description: 注文明細
+    columns:
+      - name: order_id
+        description: 注文ID
+        tests:
+          - not_null
+      - name: inventory_item_id
+        description: 在庫ID
+        tests:
+          - not_null
+      - name: sale_price
+        description: 販売価格
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+      - name: created_at
+        description: 作成日時
+        tests:
+          - not_null
+
+  - name: stg_inventory_items
+    description: 在庫・原価情報
+    columns:
+      - name: inventory_item_id
+        description: 在庫ID（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: cost
+        description: 原価
+        tests:
+          - not_null
+
+  - name: stg_promotions
+    description: プロモーションカレンダー（seedデータ由来）
+    columns:
+      - name: promo_date
+        description: プロモーション日付（主キー）
+        tests:
+          - unique
+          - not_null
+      - name: promo_name
+        description: プロモーション名
+      - name: discount_rate
+        description: 割引率
