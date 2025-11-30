@@ -1,0 +1,15 @@
+config {
+  type: "view",
+  schema: "dataform_ecommerce_staging",
+  tags: ["staging"],
+  description: "商品マスタ"
+}
+
+SELECT
+  id AS product_id,
+  name AS product_name,
+  brand,
+  category,
+  department,
+  cost AS product_cost
+FROM ${ref("bigquery-public-data", "thelook_ecommerce", "products")}

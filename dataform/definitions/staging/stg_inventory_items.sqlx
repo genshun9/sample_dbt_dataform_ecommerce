@@ -1,0 +1,13 @@
+config {
+  type: "view",
+  schema: "dataform_ecommerce_staging",
+  tags: ["staging"],
+  description: "在庫・原価情報"
+}
+
+SELECT
+  id AS inventory_item_id,
+  cost
+FROM ${ref("bigquery-public-data", "thelook_ecommerce", "inventory_items")}
+WHERE
+  DATE(created_at) >= '2025-01-01'

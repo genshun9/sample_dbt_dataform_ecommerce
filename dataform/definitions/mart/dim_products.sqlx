@@ -1,0 +1,15 @@
+config {
+  type: "table",
+  schema: "dataform_ecommerce_mart",
+  tags: ["mart", "dimension"],
+  description: "商品ディメンション"
+}
+
+SELECT
+  product_id,
+  product_name,
+  brand,
+  category,
+  department,
+  product_cost
+FROM ${ref("stg_products")}
